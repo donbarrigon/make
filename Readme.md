@@ -12,16 +12,6 @@ Make CLI es una herramienta que facilita la creación y gestión de proyectos Go
 go install github.com/donmarrigon/make@latest
 ```
 
-## 📖 Uso Básico
-
-```bash
-make <comando> [<otro_comando>] [<dominio>.]<nombre>
-```
-
-- `<comando>` y `<nombre>` son **obligatorios**
-- `<otro_comando>` y `<dominio>` son **opcionales**
-- El nombre debe estar en **snake_case**
-
 ## 🛠️ Comandos Principales
 
 ### Ayuda
@@ -54,33 +44,43 @@ make merge:upstream # Hace merge con upstream (solo para forks)
 
 ## 💻 Comandos de Desarrollo
 
+## 📖 Uso Básico
+
+```bash
+make <comando> [<otro_comando>] [<dominio>.]<nombre>
+```
+
+- `<comando>` y `<nombre>` son **obligatorios**
+- `<otro_comando>` y `<dominio>` son **opcionales**
+- El `<nombre>` debe estar en **snake_case** y en **singular**
+
 ### Base de Datos
 
 ```bash
-make model nombre_modelo              # Crea un template de modelo
-make migration crear_tabla_usuarios   # Crea una migración
-make seed usuarios_seed               # Crea un seeder
-make repository user_repository       # Crea un repositorio
-make resource user_resource           # Crea un recurso
+make model product             # Crea un template de modelo
+make migration user            # Crea una migración
+make seed role                 # Crea un seeder
+make repository profile        # Crea un repositorio
+make resource user_profile     # Crea un recurso
 ```
 
 ### Vistas y Frontend
 
 ```bash
-make view nombre_vista        # Crea templates de vista
-make page home_page           # Crea una página
-make component card           # Crea un componente
+make view category             # Crea templates de vista
+make page home                 # Crea una página
+make component card            # Crea un componente
 ```
 
 ### Lógica de Negocio
 
 ```bash
-make controller user_controller   # Crea un controlador
-make middleware auth_middleware   # Crea un middleware
-make policy user_policy           # Crea una policy
-make route api_route              # Crea rutas
-make service email_service        # Crea un service
-make validator user_validator     # Crea un validator
+make controller user           # Crea un controlador
+make middleware auth           # Crea un middleware
+make policy user               # Crea una policy
+make route inventory           # Crea rutas
+make service emial             # Crea un service
+make validator user_store      # Crea un validator
 ```
 
 ---
@@ -105,7 +105,7 @@ Crea: **controller + policy + route + validator**
 ```bash
 make ui dashboard
 ```
-Crea: **view + js + css**
+Crea: **pages_crud + js + css**
 
 ### MVC - Aplicación Web Completa
 ```bash
@@ -127,21 +127,44 @@ Crea: **db + handler** (ideal para APIs REST)
 .
 ├── main.go
 ├── go.mod
-└── internal/
-    ├── config/
-    ├── database/
-    │   ├── migrations/
-    │   └── seeds/
-    ├── models/
-    ├── controllers/
-    ├── middlewares/
-    ├── policies/
-    ├── routes/
-    ├── services/
-    ├── validators/
-    ├── repositories/
-    ├── resources/
-    └── views/
+├── go.sum
+├── biome.json
+├── bun.lock
+├── package.json
+├── tsconfig.json
+├── .env
+├── .gitignore
+├── internal/
+│   ├── app/
+│   │   ├── data/
+│   │   │   ├── model/
+│   │   │   ├── repository/       
+│   │   │   └── resource/
+│   │   ├── handler/          
+│   │   │   ├── controller/
+│   │   │   ├── middleware/
+│   │   │   ├── policy/
+│   │   │   ├── route/
+│   │   │   ├── service/
+│   │   │   └── validator/
+│   │   └── ui/
+│   │       ├── components/
+│   │       ├── css/
+│   │       ├── js/
+│   │       ├── layout/
+│   │       ├── pages/
+│   │       └── view/        # archivos de pages compilados en formato go
+│   └── database/
+│       ├── data
+│       │   ├── migrations/  # archivos de migracion
+│       │   └── seeds/       # carpeta con los seeds
+│       └── handler          # esta capa solo son endpoints para correr las migracion no requiere intervencion
+│           ├── controller/
+│           ├── middleware/
+│           └── route/
+├── node_modules/            # carpeta con cientos de gigas de librerias
+├── public/                  # contiene el css, js compilado para el modo desarrollo (no usar)
+├── tmp/                     # archivos temporales logs, sessiones, trackers de la migracion y seeds
 ```
 
 ---
@@ -155,14 +178,10 @@ Crea: **db + handler** (ideal para APIs REST)
 make mvc user
 
 # Opción 2: Paso a paso
-make model user
-make migration create_users_table
-make seed users_seed
-make controller user_controller
-make view users
+make model migration controller view user
 ```
 
-### Crear una API REST
+### Crear una API-REST o API-MSGPACK
 
 ```bash
 make api product
@@ -172,7 +191,7 @@ make api product
 
 ```bash
 make middleware auth
-make policy auth_policy
+make policy auth
 ```
 
 ---
