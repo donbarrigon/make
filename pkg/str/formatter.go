@@ -1,4 +1,4 @@
-package formatter
+package str
 
 import (
 	"strings"
@@ -92,13 +92,13 @@ func capitalize(s string) string {
 	return titleCaser.String(s)
 }
 
-// 🐍 snake_case
+// convierte una cadena a 🐍 snake_case
 func ToSnakeCase(s string) string {
 	words := splitWords(s)
 	return strings.Join(words, "_")
 }
 
-// 🐫 camelCase
+// convierte una cadena a camelCase 🐫 camelCase
 func ToCamelCase(s string) string {
 	words := splitWords(s)
 	for i := range words {
@@ -110,7 +110,7 @@ func ToCamelCase(s string) string {
 	return strings.Join(words, "")
 }
 
-// 🐘 PascalCase
+// convierte una cadena a PascalCase 🐘 PascalCase
 func ToPascalCase(s string) string {
 	words := splitWords(s)
 	for i := range words {
@@ -119,10 +119,35 @@ func ToPascalCase(s string) string {
 	return strings.Join(words, "")
 }
 
-// 🍢 kebab-case
+// convierte una cadena a 🍢 kebab-case
 func ToKebabCase(s string) string {
 	words := splitWords(s)
 	return strings.Join(words, "-")
+}
+
+// ToVar convierte un identificador a una variable corta usando las iniciales
+// de cada palabra en minúsculas.
+// Ej: ProductCategory => pc, user_profile => up
+func ToVar(s string) string {
+	if s == "" {
+		return ""
+	}
+
+	words := splitWords(s)
+	if len(words) == 0 {
+		return ""
+	}
+
+	var result strings.Builder
+	for _, word := range words {
+		if len(word) > 0 {
+			// Tomar la primera runa de cada palabra
+			firstRune := []rune(word)[0]
+			result.WriteRune(unicode.ToLower(firstRune))
+		}
+	}
+
+	return result.String()
 }
 
 // Pluralize pluraliza una cadena según las reglas estándar de pluralización en inglés.

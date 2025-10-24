@@ -2,7 +2,9 @@ package main
 
 import (
 	"donbarrigon/make/cmd"
+	"donbarrigon/make/project"
 	"fmt"
+	"os"
 )
 
 func main() {
@@ -14,11 +16,9 @@ func main() {
 		case "help":
 			cmd.Help()
 		case "project":
-			cmd.Info("project")
-		case "fork":
-			cmd.Info("fork")
-		case "merge":
-			cmd.Info("merge")
+			project.New()
+		case "merge:upstream":
+			cmd.Info("merge:upstream")
 		case "run":
 			cmd.Info("run")
 		case "build":
@@ -63,7 +63,7 @@ func main() {
 			cmd.Help()
 			cmd.Danger("El comando " + c + " no existe")
 			fmt.Println("")
-			return
+			os.Exit(127)
 		}
 	}
 	fmt.Println("")

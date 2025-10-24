@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"donbarrigon/make/pkg/str"
 	"os"
 )
 
@@ -14,15 +15,13 @@ type Name struct {
 	Camelp  string
 	Pascalp string
 	Kebabp  string
-	Varp    string
 }
 
 // comandos que no se ejecutan en grupo
 var CommandList = []string{
 	"help",
 	"project",
-	"fork",
-	"merge",
+	"merge:upstream",
 	"run",
 	"build",
 }
@@ -85,16 +84,16 @@ func GetCommands() []string {
 }
 
 func GetName() Name {
+	n := os.Args[len(os.Args)-1]
 	return Name{
-		Snake:   os.Args[len(os.Args)-1],
-		Camel:   os.Args[len(os.Args)-1],
-		Pascal:  os.Args[len(os.Args)-1],
-		Kebab:   os.Args[len(os.Args)-1],
-		Var:     os.Args[len(os.Args)-1],
-		Snakep:  os.Args[len(os.Args)-1],
-		Camelp:  os.Args[len(os.Args)-1],
-		Pascalp: os.Args[len(os.Args)-1],
-		Kebabp:  os.Args[len(os.Args)-1],
-		Varp:    os.Args[len(os.Args)-1],
+		Snake:   str.ToSnakeCase(n),
+		Camel:   str.ToCamelCase(n),
+		Pascal:  str.ToPascalCase(n),
+		Kebab:   str.ToKebabCase(n),
+		Var:     str.ToVar(n),
+		Snakep:  str.PluralizeIdentifier(str.ToSnakeCase(n)),
+		Camelp:  str.PluralizeIdentifier(str.ToSnakeCase(n)),
+		Pascalp: str.PluralizeIdentifier(str.ToSnakeCase(n)),
+		Kebabp:  str.PluralizeIdentifier(str.ToSnakeCase(n)),
 	}
 }
