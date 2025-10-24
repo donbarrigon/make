@@ -1,10 +1,10 @@
-# Make CLI
+# Make
 
 Asistente de línea de comandos inspirado en Artisan de Laravel para proyectos Go.
 
 ## 📋 Descripción
 
-Make CLI es una herramienta que facilita la creación y gestión de proyectos Go siguiendo patrones similares a Laravel Artisan. Permite generar automáticamente estructuras de código, migraciones, controladores y más.
+Make es una herramienta que facilita la creación y gestión de proyectos Go siguiendo patrones similares a Laravel Artisan. Permite generar automáticamente estructuras de código, migraciones, controladores y más.
 
 ## 🚀 Instalación
 
@@ -13,15 +13,6 @@ go install github.com/donmarrigon/make@latest
 ```
 
 ## 🛠️ Comandos Principales
-
-### Ayuda
-
-```bash
-make help
-```
-Muestra todos los comandos disponibles.
-
----
 
 ## 🏗️ Gestión de Proyectos
 
@@ -39,6 +30,15 @@ make run            # Ejecuta el proyecto en modo desarrollo
 make build          # Compila todo el proyecto en /dist
 make merge:upstream # Hace merge con upstream (solo para forks)
 ```
+
+---
+
+### Ayuda
+
+```bash
+make help
+```
+Muestra todos los comandos disponibles.
 
 ---
 
@@ -103,7 +103,7 @@ Crea: **controller + policy + route + validator**
 
 ### UI - Interfaz de Usuario Completa
 ```bash
-make ui dashboard
+make ui dashboard.profile
 ```
 Crea: **pages_crud + js + css**
 
