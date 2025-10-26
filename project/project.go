@@ -52,9 +52,11 @@ func getProjectType() (string, []string) {
 		if cmd.PromptConfirm("Fork al proyecto original?", false) {
 			options = append(options, "fork")
 		}
+		if cmd.PromptConfirm("Usar GORM?", false) {
+			options = append(options, "gorm")
+		}
 		if cmd.PromptConfirm("Instalar Documentacion?", true) {
 			options = append(options, "docs")
-			cmd.Warning("requiere que instales la dependencia alpine")
 		}
 	}
 	if cmd.PromptConfirm("Usar TypeScript?", false) {
@@ -65,9 +67,6 @@ func getProjectType() (string, []string) {
 	}
 	if cmd.PromptConfirm("Instalar tailwind?", false) {
 		options = append(options, "tailwind")
-	}
-	if cmd.PromptConfirm("Instalar Alpine?", true) {
-		options = append(options, "alpine")
 	}
 
 	return tipe, options

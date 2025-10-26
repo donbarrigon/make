@@ -17,6 +17,7 @@ func createGoProject(projectUser string, projectName string, options []string) {
 	goBunInit(projectUser, projectName)
 	goModInit(projectUser, projectName)
 	goGitInit(projectUser, projectName, options)
+	goOptions(options)
 
 	cmd.Run("code", ".")
 }
@@ -106,4 +107,18 @@ func goGitInit(projectUser string, projectName string, options []string) {
 	}
 
 	cmd.Success("Git de " + projectUser + "/" + projectName + " configurado.")
+}
+
+func goOptions(options []string) {
+	if !slices.Contains(options, "docs") {
+		e := os.RemoveAll("internal/docs")
+		if e != nil {
+			cmd.Danger("No se pudo eliminar la documentacion: " + e.Error())
+			os.Exit(1)
+		}
+		cmd.Success("Documentacion eliminada")
+	}
+	if !slices.Contains(options, "tailwind") {
+		cmd.Danger("TODO: La opcion tailwind aun no esta implementada.")
+	}
 }
