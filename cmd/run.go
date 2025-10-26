@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func Run(name string, args ...string) {
+func Runc(name string, args ...string) {
 	msg := fmt.Sprintf("Ejecutando: %s %s", name, strings.Join(args, " "))
 	Info(msg)
 	cmd := exec.Command(name, args...)

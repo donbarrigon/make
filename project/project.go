@@ -2,7 +2,6 @@ package project
 
 import (
 	"donbarrigon/make/cmd"
-	"donbarrigon/make/config"
 	"os"
 	"regexp"
 	"strings"
@@ -13,18 +12,11 @@ func New() {
 	projectType, projectOptions := getProjectType()
 
 	switch projectType {
-	case "go":
+	case "Go":
 		createGoProject(projectUser, projectName, projectOptions)
 	default:
-		cmd.Danger("TODO: No implementado")
+		cmd.Danger("TODO: tipo de proyecto " + projectType + " No implementado")
 	}
-
-	config.Save(map[string]any{
-		"user":    projectUser,
-		"name":    projectName,
-		"type":    projectType,
-		"options": projectOptions,
-	})
 
 }
 
@@ -46,9 +38,9 @@ func getProjectName() (user string, name string) {
 func getProjectType() (string, []string) {
 	cmd.Info("Configuración del proyecto")
 
-	tipe := cmd.PromptSelect("🏗️ Selecciona el tipo de proyecto", 0, "go", "vue", "bun")
+	tipe := cmd.PromptSelect("🏗️ Selecciona el tipo de proyecto", 0, "Go", "Vue", "Bun")
 	options := []string{}
-	if tipe == "go" {
+	if tipe == "Go" {
 		if cmd.PromptConfirm("Fork al proyecto original?", false) {
 			options = append(options, "fork")
 		}

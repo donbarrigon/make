@@ -2,6 +2,7 @@ package project
 
 import (
 	"donbarrigon/make/cmd"
+	"donbarrigon/make/config"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -11,15 +12,22 @@ import (
 )
 
 func createGoProject(projectUser string, projectName string, options []string) {
-	cmd.Runf("Clonando el repositorio", "git", "clone", "https://github.com/donbarrigon/new.git "+projectName)
-	cmd.Run("cd", projectName)
+	cmd.Runf("Clonando el repositorio", "git", "clone", "https://github.com/donbarrigon/new.git", projectName)
+	os.Chdir(projectName)
+
+	config.Save(map[string]any{
+		"user":    projectUser,
+		"name":    projectName,
+		"type":    "Go",
+		"options": options,
+	})
 
 	goBunInit(projectUser, projectName)
 	goModInit(projectUser, projectName)
 	goGitInit(projectUser, projectName, options)
 	goOptions(options)
 
-	cmd.Run("code", ".")
+	cmd.Runc("code", ".")
 }
 
 // goBunInit asigna autor y name al package.json
@@ -118,7 +126,7 @@ func goOptions(options []string) {
 		}
 		cmd.Success("Documentacion eliminada")
 	}
-	if !slices.Contains(options, "tailwind") {
+	if slices.Contains(options, "tailwind") {
 		cmd.Danger("TODO: La opcion tailwind aun no esta implementada.")
 	}
 }

@@ -5,7 +5,6 @@ import (
 	"donbarrigon/make/cmd/color"
 	"fmt"
 	"os"
-	"slices"
 	"strconv"
 	"strings"
 )
@@ -23,13 +22,14 @@ func Prompt(msg string, defaultValue string) string {
 }
 
 func PromptSelect(msg string, defaultValue int, options ...string) string {
-	fmt.Printf("%s [%s%d%s]:\n", msg, color.Secondary, defaultValue, color.Reset)
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Printf("%s [%s%s%s]:\n", msg, color.Secondary, options[defaultValue], color.Reset)
 	for i, option := range options {
 		fmt.Printf("[%d] => %s\n", i+1, option)
 	}
 
-	choiceStr := ""
-	fmt.Scan(&choiceStr)
+	choiceStr, _ := reader.ReadString('\n')
+	choiceStr = strings.ToLower(strings.TrimSpace(choiceStr))
 
 	choice := defaultValue
 	if choiceStr != "" {
@@ -41,10 +41,12 @@ func PromptSelect(msg string, defaultValue int, options ...string) string {
 			}
 			choice = c - 1
 		} else {
-			c = slices.Index(options, choiceStr)
-			if c < 0 {
-				Danger("!PÓNGA MAS CUIDADO [" + choiceStr + " ] no es valido")
-				os.Exit(2)
+			c := -1
+			for i, option := range options {
+				if strings.ToLower(option) == choiceStr {
+					c = i
+					break
+				}
 			}
 			choice = c
 		}
